@@ -6,10 +6,61 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
+    <div id="eventSelect_one" style="float: left;"></div>
+    <div id="eventSelect_two" style="float: left;"></div>
+    <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
+    <div id="propSelect" style="float: left;"></div>
     <script>
       MP.api.ready(function() {
-        // Run queries and display results here
+        var eventSelect_one = $('#eventSelect_one').MPEventSelect();
+        var eventSelect_two = $('#eventSelect_two').MPEventSelect();
+        var propSelect = $('#propSelect').MPPropertySelect();
+        
+        var runQuery = function() {
+          var eventName_one = eventSelect_one.MPEventSelect('value'),
+              eventName_two = eventSelect_two.MPEventSelect('value'),
+              propSelector = propSelect.MPPropertySelect('value');
+          
+          if(eventName_one && eventName_two && propSelector){
+            var $segone = MP.api.segment(eventName_one, propSelector, {
+                from: moment().subtract(1, 'months'),
+                to: moment(),
+                type: 'unique',
+                unit: 'month'
+            });
+        
+            var $segtwo = MP.api.segment(eventName_two, 'mp_country_code', {
+                from: moment().subtract(1, 'days'),
+                to: moment(),
+                type: 'unique',
+                unit: 'day'
+            });
+        
+            $.when($segtwo, $segone).done(function(segtwo, segone) {
+                $('<div></div>').appendTo('body').MPChart({
+                    chartType: 'line',
+                    data: {
+                      eventName_one: $segone,
+                      eventName_two: $segtwo
+                    };
+                });
+            });
+          }
+        }
+        
+        eventSelect_one.on('change', function(e, eventName_one) {
+          runQuery();
+        });
+        
+        eventSelect_two.on('change', function(e, eventName_two) {
+          runQuery();
+        });
+        
+        propSelect.on('change', function(e, propSelector) {
+          runQuery();
+        });
+        
+        
       });
     </script>
   </body>
