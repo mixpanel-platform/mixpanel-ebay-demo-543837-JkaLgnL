@@ -35,16 +35,11 @@
                 type: 'unique',
                 unit: 'day'
             });
-        
-            $.when($segtwo, $segone).done(function(segtwo, segone) {
-                $('<div></div>').appendTo('body').MPChart({
-                    chartType: 'line',
-                    data: {
-                      eventName_one: $segone,
-                      eventName_two: $segtwo
-                    }
-                });
-            });
+            
+            data = {
+              eventName_one = $segone,
+              eventName_two = $segtwo
+            }
           }
         }
         
