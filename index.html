@@ -8,6 +8,7 @@
   <body class="mixpanel-platform-body">
     <div id="eventSelect_one" style="float: left;"></div>
     <div id="eventSelect_two" style="float: left;"></div>
+    <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
     <div id="propSelect" style="float: left;"></div>
     <script>
       MP.api.ready(function() {
@@ -18,7 +19,7 @@
         var runQuery = function() {
           var eventName_one = eventSelect_one.MPEventSelect('value'),
               eventName_two = eventSelect_two.MPEventSelect('value'),
-              propSelector = propSelect.MPPropertySelect(eventSelect_one,eventSelect_one);
+              propSelector = propSelect.MPPropertySelect('setEvent', eventName_one);
           
           if(eventName_one && eventName_two && propSelector){
             var $segone = MP.api.segment(eventName_one, propSelector, {
