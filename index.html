@@ -32,16 +32,21 @@
             });
         
             var $segtwo = MP.api.segment(eventName_two, 'mp_country_code', {
-                from: moment().subtract(1, 'months'),
+                from: moment().subtract(1, 'days'),
                 to: moment(),
                 type: 'unique',
-                unit: 'month'
+                unit: 'day'
             });
             
+            console.log($segone);
+            consoel.log($segtwo);
+            
             data = {
-              'Event 1' : $segone,
-              'Event 2' : $segtwo
+              eventName_one = $segone,
+              eventName_two = $segtwo
             };
+            
+            console.log(data);
             
             eventGraph.MPChart('setData', data);   
           }
@@ -58,6 +63,8 @@
         propSelect.on('change', function(e, propSelector) {
           runQuery();
         });
+        
+        
       });
     </script>
   </body>
