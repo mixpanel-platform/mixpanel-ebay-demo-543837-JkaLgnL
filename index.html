@@ -10,11 +10,13 @@
     <div id="eventSelect_two" style="float: left;"></div>
     <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
     <div id="propSelect" style="float: left;"></div>
+    <div id="graph"></div>
     <script>
       MP.api.ready(function() {
         var eventSelect_one = $('#eventSelect_one').MPEventSelect();
         var eventSelect_two = $('#eventSelect_two').MPEventSelect();
         var propSelect = $('#propSelect').MPPropertySelect();
+        var eventGraph  = $('#graph').MPChart({chartType: 'line'});
         
         var runQuery = function() {
           var eventName_one = eventSelect_one.MPEventSelect('value'),
@@ -36,17 +38,12 @@
                 unit: 'day'
             });
             
-            var data = {
-              eventName_one : $segone,
-              eventName_two : $segtwo
+            data = {
+              eventName_one = $segone,
+              eventName_two = $segtwo
             };
             
-            var lineChart = $('<div></div>').appendTo('body').MPChart({
-              chartType: 'line'
-              
-            });
-            // Create a line chart
-            lineChart.MPChart('setData', data);    
+            eventGraph.MPChart('setData', data);   
           }
         }
         
