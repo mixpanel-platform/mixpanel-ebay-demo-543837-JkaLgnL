@@ -40,6 +40,13 @@
               eventName_one = $segone,
               eventName_two = $segtwo
             };
+            
+            var lineChart = $('<div></div>').appendTo('body').MPChart({
+              chartType: 'line'
+              
+            });
+            // Create a line chart
+            lineChart.MPChart('setData', data);    
           }
         }
         
